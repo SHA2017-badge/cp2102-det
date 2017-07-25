@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
 
 	for (int i=0x8; i<0xc; i++) {
 		uint8_t data[32];
-		int r=libusb_control_transfer(devh, 0xC0, 0xFF, 0x3700+i, 0, data, sizeof(data), 10);
+		int r=libusb_control_transfer(devh, 0xC0, 0xFF, 0x3700+i, 0, data, sizeof(data), 200);
 		if (r>0) {
 			printf("%02X: Got ", i);
 			for (int n=0; n<r; n++) printf("%02X ", data[i]);
