@@ -21,12 +21,13 @@ int main(int argc, char **argv) {
 	r=libusb_init(&context);
 	if (r!=0) die_usb("libusb_init", r);
 	devh=libusb_open_device_with_vid_pid(NULL, 0x10c4, 0xea60);
+//	devh=libusb_open_device_with_vid_pid(NULL, 0, 0xea60);
 	if (devh==NULL) perror("libusb_open_device");
 	libusb_set_auto_detach_kernel_driver(devh, 1);
 	r=libusb_claim_interface(devh, 0);
 	if (r!=0) die_usb("libusb_claim", r);
 
-	for (int i=0; i<0xff; i++) {
+	for (int i=0x8; i<0xc; i++) {
 		uint8_t data[32];
 		int r=libusb_control_transfer(devh, 0xC0, 0xFF, 0x3700+i, 0, data, sizeof(data), 10);
 		if (r>0) {
