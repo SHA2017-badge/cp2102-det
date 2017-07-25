@@ -1,8 +1,11 @@
-TARGET=cp2102det
-OBJS=main.o
-CFLAGS=`pkg-config --cflags libusb-1.0` -std=gnu99
-LDFLAGS=`pkg-config --libs libusb-1.0`
+CC      = gcc
+CFLAGS  = -Wall -std=gnu99
+CFLAGS += `pkg-config --cflags libusb-1.0`
+LDLIBS  = `pkg-config --libs libusb-1.0`
 
+all: main
 
-$(TARGET): $(OBJS)
-	$(CC) -o $@ $(LDFLAGS) $^
+main: main.o
+
+clean:
+	rm -f main main.o
