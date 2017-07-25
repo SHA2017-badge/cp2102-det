@@ -27,12 +27,13 @@ int main(int argc, char **argv) {
 	r=libusb_claim_interface(devh, 0);
 	if (r!=0) die_usb("libusb_claim", r);
 
-	for (int i=0x8; i<0xc; i++) {
-		uint8_t data[32];
-		int r=libusb_control_transfer(devh, 0xC0, 0xFF, 0x3700+i, 0, data, sizeof(data), 200);
+	for (int i=0x9; i<0xc; i++) {
+		uint8_t data[128];
+		memset(data, 0xA5, 32);
+		int r=libusb_control_transfer(devh, 0xC0, 0xFF, 0x3700+i, 0, data, sizeof(data), 2000);
 		if (r>0) {
-			printf("%02X: Got ", i);
-			for (int n=0; n<r; n++) printf("%02X ", data[i]);
+			printf("%02X: Got %d bytes:  ", i, r);
+			for (int n=0; n<r; n++) printf("%02X ", data[n]);
 			printf("\n");
 		} else {
 			printf("%02X: Error: %d\n", i, r);
